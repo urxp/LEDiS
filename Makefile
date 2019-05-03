@@ -26,7 +26,7 @@ drally.le: drally.wlink drally.obj
 
 drally.obj: drally.asm 
 #	wasm -fo=$@ $<
-	nasm -f obj -o $@ $< -O0 -l drally.lst
+	nasm -f obj -o $@ $< -O0
 #	ml.exe /omf /c /Fo$@ $<
 
 drally.asm: $(Makefile) $(segs)
@@ -45,4 +45,4 @@ bin2inc: bin2inc.o fixups.o le.o disasm.o disasm_switch.o address_mode.o $(ops)
 .PHONY: clean
 
 clean:
-	@rm -f $(segs) *.o drally.obj drally.exe drally.le drally.lst bin2inc
+	@rm -f $(segs) *.o drally.obj drally.exe drally.le bin2inc
