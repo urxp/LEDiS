@@ -1,0 +1,13 @@
+option osname='DOS/4G'
+format os2 le
+
+libpath %WATCOM%/lib386
+libpath %WATCOM%/lib386/dos
+
+op stub=wstub.exe
+#op start=start
+
+#library clib3s.lib
+#library clib3r.lib
+
+file drally.obj

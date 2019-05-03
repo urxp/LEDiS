@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cp drally.exe ~/DEATHRAL/drally.exe
+cp drally.le ~/DEATHRAL/drally.le
+
+# dosbox ~/DEATHRAL/drally.exe
+dosbox -c "mount C ~/DEATHRAL" -c "C:" -c "DOS4G.EXE drally.le"

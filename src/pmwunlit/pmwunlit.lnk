@@ -1,0 +1,17 @@
+
+option osname='DOS'
+libpath %WATCOM%/lib286
+libpath %WATCOM%/lib286/dos
+
+
+format dos
+
+op start=start
+
+
+#library clib3s.lib
+#library clib3r.lib
+
+file pmwunlit.o
+
+name pmwunlit.exe
