@@ -1,9 +1,9 @@
 *.o
-backup
-bin
-src
+_backup
+_bin
+_src
 drally.le
 drally.exe
 drally.obj
-RALLY.LE
+_RALLY.LE
 *.tmp

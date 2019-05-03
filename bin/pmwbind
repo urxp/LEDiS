@@ -1,5 +1,0 @@
-#!/bin/sh
-
-args="$@"
-
-dosboxwrapper pmwbind.exe "$args"

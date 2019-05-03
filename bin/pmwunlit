@@ -1,5 +1,0 @@
-#!/bin/sh
-
-args="$@"
-
-dosboxwrapper pmwunlit.exe "$args"
