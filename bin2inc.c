@@ -28,7 +28,7 @@ dword GLOBAL_DB_MAX = 0x10;
 	dword GLOBAL_POSITIONS_INTERVAL = 0x080;
 	dword GLOBAL_PAGE_SIZE = 0x1000;
 #endif
-const char * GLOBAL_LABEL_PREFIX = "dr@";
+const char * GLOBAL_LABEL_PREFIX = "___";
 
 #ifdef GLOBAL_STATS
 struct timeval __global_timer, __local_timer;
@@ -795,7 +795,7 @@ void fn_bytes(){
 		dlmtr = " ";
 	}
 	else {
-		sprintf(addr,"\n;%08x: ", le.i);
+		sprintf(addr,"\n;%08x: ", getObjectSegmentBaseAddress(le.obj_n) + le.i);
 		dlmtr = addr;
 	};
 	fprintf(le.fd, "%s%02x", dlmtr, ((byte *)le.in_buff)[le.i]);

@@ -1,5 +1,5 @@
-CC = clang-9
-BYTES = -DSHOW_INPUT_BYTES
+CC = clang
+BYTES = #-DSHOW_INPUT_BYTES
 CFLAGS = -DPACKED -m32 -O3
 CFLAGS += $(BYTES)
 Makefile = Makefile

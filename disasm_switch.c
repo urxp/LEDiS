@@ -141,6 +141,17 @@ switch_start:
         case 0x0f:
             op = read_byte();
             switch(op){
+            case 0x00:
+                address_mode = read_byte();
+                if(((address_mode>>3)&7) == 5){
+                    operand_size = 16;
+                    sprintf(buffer, FORMAT"%s", "verw", mod_rm());
+                    mark_instruction(); //comment_instruction();
+                }
+                else goto l_def;
+                
+                IDisasm.pushAddress(&current_va);
+                break;
             case 0x01:
                 address_mode = read_byte();
                 if(address_mode == 0x25){
