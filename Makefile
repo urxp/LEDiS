@@ -13,7 +13,7 @@ ops = op_00.o op_01.o op_02.o op_03.o \
 		op_69.o op_6b.o op_80.o op_81.o op_83.o \
 		op_84.o op_85.o \
 		op_88.o op_89.o op_8a.o op_8b.o op_8d.o \
-		op_c0.o op_c1.o op_c4.o op_c6.o op_c7.o \
+		op_c0.o op_c1.o op_c4.o op_c5.o op_c6.o op_c7.o \
 		op_d0.o op_d1.o op_f6.o op_f7.o op_ff.o
 
 all: qfgiv.exe qfgiv.le

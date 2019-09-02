@@ -136,6 +136,8 @@ byte    mod_mod(void);
 char * o_size_str(void);
 
 void pushJumpTable(VirtualAddress *);
+void pushJumpTable2(VirtualAddress *, VirtualAddress *);
+void pushObject(VirtualAddress *);
 
 #define iFORMAT "%-8s"
 extern boolean prefix_66;
@@ -198,6 +200,7 @@ boolean op_8d(void);
 boolean op_c0(void);
 boolean op_c1(void);
 boolean op_c4(void);
+boolean op_c5(void);
 boolean op_c6(void);
 boolean op_c7(void);
 boolean op_d0(void);

@@ -148,6 +148,11 @@ switch_start:
                     sprintf(buffer, FORMAT"%s", "verw", mod_rm());
                     mark_instruction(); //comment_instruction();
                 }
+                else if(((address_mode>>3)&7) == 4){
+                    operand_size = 16;
+                    sprintf(buffer, FORMAT"%s", "verr", mod_rm());
+                    mark_instruction(); //comment_instruction();
+                }
                 else goto l_def;
                 
                 IDisasm.pushAddress(&current_va);
@@ -237,8 +242,19 @@ switch_start:
             case 0x94:
                 if(prefix_66) goto l_def;
                 switch(read_byte()){
+                case 0x44:
+                    address_mode = 0x44;
+                    sprintf(buffer, FORMAT"byte %s", "setz", mod_rm());
+                    mark_instruction();
+                    IDisasm.pushAddress(&current_va);
+                    break;
                 case 0xc0:
                     sprintf(buffer, FORMAT"%s", "setz", "al");
+                    mark_instruction();
+                    IDisasm.pushAddress(&current_va);
+                    break;
+                case 0xc1:
+                    sprintf(buffer, FORMAT"%s", "setz", "cl");
                     mark_instruction();
                     IDisasm.pushAddress(&current_va);
                     break;
@@ -314,6 +330,28 @@ switch_start:
                     mark_instruction();
                     IDisasm.pushAddress(&current_va);
                     break;
+                case 0xc1:
+                    sprintf(buffer, FORMAT"%s", "setl", "cl");
+                    mark_instruction();
+                    IDisasm.pushAddress(&current_va);
+                    break;
+                case 0xc3:
+                    sprintf(buffer, FORMAT"%s", "setl", "bl");
+                    mark_instruction();
+                    IDisasm.pushAddress(&current_va);
+                    break;
+                default:
+                    goto l_def;
+                }
+                break;
+            case 0x9d:
+                if(prefix_66) goto l_def;
+                switch(read_byte()){
+                case 0xc0:
+                    sprintf(buffer, FORMAT"%s", "setge", "al");
+                    mark_instruction();
+                    IDisasm.pushAddress(&current_va);
+                    break;
                 default:
                     goto l_def;
                 }
@@ -335,6 +373,11 @@ switch_start:
                 switch(read_byte()){
                 case 0xc0:
                     sprintf(buffer, FORMAT"%s", "setg", "al");
+                    mark_instruction();
+                    IDisasm.pushAddress(&current_va);
+                    break;
+                case 0xc3:
+                    sprintf(buffer, FORMAT"%s", "setg", "bl");
                     mark_instruction();
                     IDisasm.pushAddress(&current_va);
                     break;
@@ -492,6 +535,16 @@ switch_start:
                 address_mode = read_byte();
                 sprintf(buffer, FORMAT"%s, %s", "imul", 
                     mod_reg(), mod_rm());
+                mark_instruction();
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0xb2:
+                address_mode = read_byte();
+                tmp0 = mod_reg();
+                tmp1 = mod_rm();
+
+                sprintf(buffer, FORMAT"%s, %s", "lss", 
+                        tmp0, tmp1);
                 mark_instruction();
                 IDisasm.pushAddress(&current_va);
                 break;
@@ -874,6 +927,11 @@ switch_start:
             mark_instruction();
             IDisasm.pushAddress(&current_va);
             break;
+        case 0x64:
+            seg_seg = "fs:";
+            seg_ds  = "fs:";
+            seg_ss  = "fs:";
+            goto switch_start;
         case 0x65:
             seg_seg = "gs:";
             seg_ds  = "gs:";
@@ -1057,8 +1115,12 @@ switch_start:
             IDisasm.pushAddress(&current_va);
             break;
         case 0x96:
-            if(prefix_66) goto l_def;
-            sprintf(buffer, FORMAT"%s, %s", "xchg", "esi", "eax");
+            if(prefix_66){
+                sprintf(buffer, FORMAT"%s, %s", "xchg", "si", "ax");
+            }
+            else {
+                sprintf(buffer, FORMAT"%s, %s", "xchg", "esi", "eax");
+            }
             mark_instruction();
             // push next instruction offset to stack
             IDisasm.pushAddress(&current_va);
@@ -1229,6 +1291,17 @@ switch_start:
             // push next instruction offset to stack
             IDisasm.pushAddress(&current_va);
             break;
+        case 0xa7:
+            if(prefix_66){
+                sprintf(buffer, "%s"FORMAT, rep_prefix, "cmpsw");
+            }
+            else {
+                sprintf(buffer, "%s"FORMAT, rep_prefix, "cmpsd");
+            }
+            mark_instruction();
+            // push next instruction offset to stack
+            IDisasm.pushAddress(&current_va);
+            break;
         case 0xa8:  // test AL, IB 
             ib = read_byte();
             sprintf(buffer, FORMAT"%s, %s", "test", "al", hexbyte(ib));
@@ -1373,6 +1446,9 @@ switch_start:
         case 0xc4:
             if(!op_c4()) goto l_def;
             break;
+        case 0xc5:
+            if(!op_c5()) goto l_def;
+            break;
         case 0xc6:
             if(!op_c6()) goto l_def;
             break;
@@ -1440,6 +1516,22 @@ switch_start:
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);
                 break;
+            case 0xe0:
+                if(prefix_66) goto l_def;
+                sprintf(buffer, FORMAT"%s, %s", "shl",
+                    "al", "cl");
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0xe3:
+                if(prefix_66) goto l_def;
+                sprintf(buffer, FORMAT"%s, %s", "shl",
+                    "bl", "cl");
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
             default:
                 goto l_def;
             }
@@ -1483,17 +1575,35 @@ switch_start:
                 IDisasm.pushAddress(&current_va);
                 break;
             case 0xe3:
-                if(!prefix_66) goto l_def;
+                if(prefix_66){
+                    sprintf(buffer, FORMAT"%s, %s", "shl",
+                        "bx", "cl");
+                }
+                else {
+                    sprintf(buffer, FORMAT"%s, %s", "shl",
+                        "ebx", "cl");
+                }
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0xe7:
+                if(prefix_66) goto l_def;
                 sprintf(buffer, FORMAT"%s, %s", "shl",
-                    "bx", "cl");
+                    "edi", "cl");
                 mark_instruction();
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);
                 break;
             case 0xe8:
-                if(prefix_66) goto l_def;
-                sprintf(buffer, FORMAT"%s, %s", "shr",
-                    "eax", "cl");
+                if(prefix_66){
+                    sprintf(buffer, FORMAT"%s, %s", "shr",
+                        "ax", "cl");
+                }
+                else {
+                    sprintf(buffer, FORMAT"%s, %s", "shr",
+                        "eax", "cl");
+                }
                 mark_instruction();
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);
@@ -2909,6 +3019,14 @@ switch_start:
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);
                 break;
+            case 0x04:
+                address_mode = 0x04;
+                sprintf(buffer, FORMAT"byte %s",
+                    "inc", mod_rm());
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
             case 0x05:
                 address_mode = 0x05;
                 sprintf(buffer, FORMAT"byte %s",
@@ -2933,8 +3051,24 @@ switch_start:
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);
                 break;
+            case 0x44:
+                address_mode = 0x44;
+                sprintf(buffer, FORMAT"byte %s",
+                    "inc", mod_rm());
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
             case 0x48:
                 address_mode = 0x48;
+                sprintf(buffer, FORMAT"byte %s",
+                    "dec", mod_rm());
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0x4d:
+                address_mode = 0x4d;
                 sprintf(buffer, FORMAT"byte %s",
                     "dec", mod_rm());
                 mark_instruction();
@@ -2957,8 +3091,32 @@ switch_start:
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);
                 break;
+            case 0x83:
+                address_mode = 0x83;
+                sprintf(buffer, FORMAT"byte %s",
+                    "inc", mod_rm());
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0x84:
+                address_mode = 0x84;
+                sprintf(buffer, FORMAT"byte %s",
+                    "inc", mod_rm());
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
             case 0x88:
                 address_mode = 0x88;
+                sprintf(buffer, FORMAT"byte %s",
+                    "dec", mod_rm());
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0x8b:
+                address_mode = 0x8b;
                 sprintf(buffer, FORMAT"byte %s",
                     "dec", mod_rm());
                 mark_instruction();
@@ -3045,6 +3203,12 @@ switch_start:
                 break;
             case 0xcd:
                 sprintf(buffer, FORMAT"%s", "dec", "ch");
+                mark_instruction();
+                // push next instruction offset to stack
+                IDisasm.pushAddress(&current_va);
+                break;
+            case 0xce:
+                sprintf(buffer, FORMAT"%s", "dec", "dh");
                 mark_instruction();
                 // push next instruction offset to stack
                 IDisasm.pushAddress(&current_va);

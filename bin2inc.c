@@ -169,8 +169,22 @@ char * getLabel(dword obj, dword offset){
 	if(obj == 1){ // SIERRA.LE specific
 		switch(offset){
 		lname(0x00051d34, "main");
+		lname(0x0006a830, "memset");
+		lname(0x0006a9a1, "printf");
+		lname(0x0006ad0a, "open");
+		lname(0x0006afa0, "close");
+		lname(0x0006b368, "read");
+		lname(0x0006b441, "int386");
+		lname(0x0006be01, "int386x");
+		lname(0x0006be22, "malloc");
+		lname(0x0006bea4, "free");
+		lname(0x0006c1f8, "fopen");
+		lname(0x0006c2b4, "fclose");
+		lname(0x0006e642, "getenv");
 		lname(0x0006eb20, "__CMain");
 		lname(0x0006eb70, "__InitRtns");
+		lname(0x0006ebb3, "__FiniRtns");
+		lname(0x0006f9cd, "memcpy");
 		default:
 			break;
 		}
@@ -614,7 +628,7 @@ int main(int argc, char * argv[]){
 
 
 	// disassembling [TODO]
-	// #__InitRtns
+	// # __InitRtns
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x00001040 });
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x000053b0 });
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x00005c50 });
@@ -643,6 +657,10 @@ int main(int argc, char * argv[]){
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x00070e1c });
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x00071b6a });
 	// __InitRtns #
+	// # __FiniRtns
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x0006ccff });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x00070a28 });
+	// __FiniRtns #
 
 	// 'main ?'
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x0005168c });
@@ -787,10 +805,314 @@ int main(int argc, char * argv[]){
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x00054b70 });
 
 
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xda0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xea0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xef0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4068 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x5470 });
 
 
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0 });
 	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 2, .offset = 0 });
+
+
+
+
+
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x81e0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x8310 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x84c0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x8510 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x8530 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xe72c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xe830 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xe850 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xe890 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xe8a0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xe8ec });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0xeaf0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x183e0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x18734 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x188b8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x188d4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x188f4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2164c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x216d4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x21778 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x21790 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x219b0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x284ec });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x28c00 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x28f88 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2a430 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2a460 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2a4a0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2a4e0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2a580 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x2c45f });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x310c4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x32a2c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34760 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34920 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x3494c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34980 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x349b4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x349d8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34a1c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34a64 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34aa8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34af0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34bb0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34c74 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34cbc });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34d08 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34d6c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x34dd8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x3a6d0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x3a710 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x40b30 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x40b70 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x40c80 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x41ab0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x41fa0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x41fe0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x43fd6 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x43fe6 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4402d });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4405b });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4427b });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x44296 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x442a1 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x442e4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x44311 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x44358 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x443b2 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x44400 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x44447 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x444c1 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x489c0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x48a00 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x48a70 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x48a90 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x48dd8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4a820 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4a880 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4a8c0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x4c914 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x513d0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x513e0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x513f0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x51400 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x53110 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x54a30 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x54b20 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56496 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x564a5 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x564b4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x564c3 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x564d4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x564e5 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x564f4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56505 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x5665e });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56669 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56672 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56765 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56770 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x56779 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x5bea8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x62b99 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x62b9e });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x62ba3 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x62ba8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x62baf });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6a430 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6a530 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6a8c8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6a8db });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6a9ed });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6aa0f });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ab49 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6abcf });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ac87 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6b60f });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6b61a });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6b71f });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6b727 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6b737 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6c9ec });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6cd30 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6e6d2 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6e9c8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ea26 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ea37 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ea43 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ea4a });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x6ea51 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70246 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7027c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x702a1 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x702fb });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70318 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70331 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70339 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70379 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x703b9 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70404 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7043b });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7046f });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7047b });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7048b });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7049d });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x704a4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x704b0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x704d2 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x704f8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70501 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70643 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70680 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x706af });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x706e7 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70715 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70728 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70730 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70770 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70795 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x707b8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x707ff });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70821 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70830 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70b12 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70c0a });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70c68 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70c85 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70c93 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70cab });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70cc7 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70cd4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70ce0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70d02 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70d15 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70d21 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70d39 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x70d48 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71545 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x715ba });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x715c7 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x718a4 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71b20 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71b2c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71d5b });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71efa });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71f8f });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71fcc });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x71fe7 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7204e });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x720b5 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7211c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72171 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72184 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72430 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72900 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72934 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x7297c });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72980 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x729b8 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72a35 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72a4e });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72ab0 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72ad3 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72b40 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72b4d });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72bb2 });
+	IDisasm.pushAddress(&(VirtualAddress){ .obj_n = 1, .offset = 0x72bbf });
+
+
+	pushJumpTable2(
+		&(VirtualAddress){ .obj_n = 3, .offset = 0x6674 },
+		&(VirtualAddress){ .obj_n = 3, .offset = 0x6a74 }
+	);
+
+
+	// objects
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x0de0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x0e00 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x0e30 });
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x43b0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x43e0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4440 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x44a0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4500 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4560 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x45c0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4620 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4680 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x46e0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4740 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x47a0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4800 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4860 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x48c0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4920 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4980 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x49e0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4a40 });
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x55d0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x55f0 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x5610 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x5630 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x5650 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x5670 });
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x8220 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x8240 });
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x10230 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x10290 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x102b0	});
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x14720 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x14760 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x147a0	});
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x18420 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x18470 });
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x184a0	});
+
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x187c0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x20630	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x21120	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x21190	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x21cf0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x21d10	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x25f70	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x28bd0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x2a440	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x31430	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x33860	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x339b0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x345f0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x34610	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x3bd60	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x41a50	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4a860	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4d0c0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x4e260	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x51850	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x51de0	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x51e10	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x51e70	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x54890	});
+	pushObject(&(VirtualAddress){ .obj_n = 1, .offset = 0x61840	});
+
+
+	// start object ?
+	pushObject(
+		&(VirtualAddress){ .obj_n = 1, .offset = 0x51e10 });
+
+
 /*
 	le_createLabel(4, 0x1a294);
 

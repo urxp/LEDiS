@@ -26,12 +26,12 @@ boolean op_ff(void){
 
     switch((address_mode >> 3)&7){
     case 2:
-        if(fx && (fx->size == 4)){
-            pushJumpTable(&(VirtualAddress){
-                .obj_n = fx->object_n,
-                .offset = fx->target
-            });
-        }
+    //    if(fx && (fx->size == 4)){
+    //        pushJumpTable(&(VirtualAddress){
+    //            .obj_n = fx->object_n,
+    //            .offset = fx->target
+    //        });
+    //    }
 
         sprintf(ibuffer, iFORMAT"%s%s",
             mnemonic, o_size, mod_rm_str);
@@ -48,7 +48,8 @@ boolean op_ff(void){
             });
         }
 
-        sprintf(ibuffer, iFORMAT"near %s%s",
+        //sprintf(ibuffer, iFORMAT"near %s%s",
+        sprintf(ibuffer, iFORMAT"%s%s",  
             mnemonic, o_size, mod_rm_str);
         mark_instruction();// comment_instruction();
         return boolean(1);

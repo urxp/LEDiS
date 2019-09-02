@@ -199,12 +199,13 @@ boolean checkAddress(void){
 
     // RALLY.LE specific
     // [TODO] not returning function call followed by data
-    if((IDisasm.vAddress.obj_n == 1)&&(IDisasm.vAddress.offset == 0x5041A))
-        return boolean(1);
+    
+    //if((IDisasm.vAddress.obj_n == 1)&&(IDisasm.vAddress.offset == 0x5041A))
+    //    return boolean(1);
     //if((IDisasm.vAddress.obj_n == 1)&&(IDisasm.vAddress.offset == 0x591DE))
     //    return boolean(1);
-    if((IDisasm.vAddress.obj_n == 1)&&(IDisasm.vAddress.offset == 0x6E486))
-        return boolean(1);
+    //if((IDisasm.vAddress.obj_n == 1)&&(IDisasm.vAddress.offset == 0x6E486))
+    //    return boolean(1);
 
 
     return boolean(ObjectMap[IDisasm.vAddress.obj_n - 1].IR[IDisasm.vAddress.offset].flags & 0x4);
@@ -267,6 +268,57 @@ void pushJumpTable(VirtualAddress * va){
 
 l_strt:
 
+    fx = le_checkFixup(va->obj_n, va->offset);
+
+    if(fx->size == 4){
+
+        if((ObjectMap[va->obj_n - 1].IR[va->offset].flags & 0x8) == 0){
+
+            IDisasm.pushAddress(&(VirtualAddress){ 
+                .obj_n = fx->object_n,
+                .offset = fx->target
+            });
+
+            ObjectMap[va->obj_n - 1].IR[va->offset].flags |= 0x8;
+            ObjectMap[va->obj_n - 1].DataBytes += 4;
+        }
+
+        va->offset += 4;
+        goto l_strt;
+    }
+    else return;
+}
+
+void pushJumpTable2(VirtualAddress * va, VirtualAddress * va_end){
+
+    while(va->offset != va_end->offset){
+
+        fx = le_checkFixup(va->obj_n, va->offset);
+
+        if(fx->size == 4){
+
+            if((ObjectMap[va->obj_n - 1].IR[va->offset].flags & 0x8) == 0){
+
+                IDisasm.pushAddress(&(VirtualAddress){ 
+                    .obj_n = fx->object_n,
+                    .offset = fx->target
+                });
+
+                ObjectMap[va->obj_n - 1].IR[va->offset].flags |= 0x8;
+                ObjectMap[va->obj_n - 1].DataBytes += 4;
+            }
+
+            va->offset += 4;
+        }
+        else return;
+    }
+}
+
+void pushObject(VirtualAddress * va){
+
+    va->offset += 4;
+
+l_strt:
     fx = le_checkFixup(va->obj_n, va->offset);
 
     if(fx->size == 4){
