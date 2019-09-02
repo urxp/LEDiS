@@ -6,6 +6,9 @@
 
 dword fixups_counter;
 
+static dword fixups_7 = 0;
+static dword fixups_8 = 0;
+
 
 dword position, object_n, current_page_within_object;
 void * FixupPageTable;
@@ -124,6 +127,7 @@ static boolean readFixup(){
 			break;
 		case 7:
 			// 07h = 32-bit Offset fixup (32-bits). 
+			fixups_7++;
 			if(ObjectModuleOrd == 16){
 				target_object_n = *(word *)(FixupRecordTable + position);
 				position += 2;
@@ -155,7 +159,36 @@ static boolean readFixup(){
 			break;
 		case 8:
 			// 08h = 32-bit Self-relative offset fixup (32-bits). 
+			fixups_8++;
 			printf("ATp & 0x0F :: %02xh\n", (ATp & 0x0F));
+			printf("...not sure about this\n");
+			if(ObjectModuleOrd == 16){
+				target_object_n = *(word *)(FixupRecordTable + position);
+				position += 2;
+			}
+			else{
+				target_object_n = *(byte *)(FixupRecordTable + position);
+				position++;
+			}
+
+			if(TargetOffsetSize == 32){
+
+				TRGOFF = *(dword *)(FixupRecordTable + position);
+				position += 4;
+			}
+			else{
+
+				TRGOFF = *(word *)(FixupRecordTable + position);
+				position += 2;
+			}
+			le_createFixup(object_n, (current_page_within_object - 1) * le_getPageSize() + SRCOFF_CNT, &(fixup_struct){
+				.object_n = target_object_n,
+				.type = 8,
+				.target = TRGOFF,
+				.size = 4
+			});
+			
+			le_createLabel(target_object_n, TRGOFF);
 			break;
 		default:
 			printf("err unknown source type %02xh\n", (ATp & 0x0F));
@@ -218,4 +251,7 @@ void processFixups(void){
             }
         }
     }
+
+	printf("FIXUPS 7 ::: %d\n", fixups_7);
+	printf("FIXUPS 8 ::: %d\n", fixups_8);
 }

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cp qfgiv.exe ~/QFG4/qfgiv.exe
+cp qfgiv.le ~/QFG4/qfgiv.le
+
+# dosbox ~/DEATHRAL/drally.exe
+# dosbox -c "mount C ~/QFG4" -c "C:" -c "qfgiv.exe"
+dosbox -c "mount C ~/QFG4" -c "C:" -c "DOS4G.EXE qfgiv.le"
+# dosbox-x -c "set windir=c:\windows" -c "mount C ~/DEATHRAL" -c "C:" -c "DOS4G.EXE drally.le"
+# dosbox -c "mount C ~/DEATHRAL" -c "C:" -c "pmwbind /B /DPMWRALLY.EXE DRALLY.LE" -c "PMWRALLY.EXE"

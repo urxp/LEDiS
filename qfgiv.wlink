@@ -7,7 +7,9 @@ libpath %WATCOM%/lib386/dos
 op stub=wstub.exe
 #op start=start
 
+seg ty CODE pre, ty DATA pre
+
 #library clib3s.lib
 #library clib3r.lib
 
-file drally.obj
+file qfgiv.obj

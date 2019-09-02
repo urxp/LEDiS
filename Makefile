@@ -4,7 +4,7 @@ CFLAGS = -DPACKED -m32 -O3
 CFLAGS += $(BYTES)
 Makefile = Makefile
 
-segs = obj_1.inc obj_2.inc obj_3.inc obj_4.inc bss_4.inc
+segs = obj_1.inc obj_2.inc obj_3.inc bss_3.inc
 ops = op_00.o op_01.o op_02.o op_03.o \
 		op_08.o op_09.o op_0a.o op_0b.o \
 		op_20.o op_21.o op_22.o op_23.o op_28.o op_29.o op_2a.o op_2b.o \
@@ -16,20 +16,20 @@ ops = op_00.o op_01.o op_02.o op_03.o \
 		op_c0.o op_c1.o op_c4.o op_c6.o op_c7.o \
 		op_d0.o op_d1.o op_f6.o op_f7.o op_ff.o
 
-all: drally.exe drally.le
+all: qfgiv.exe qfgiv.le
 
-drally.exe: drally.wlink drally.obj 
+qfgiv.exe: qfgiv.wlink qfgiv.obj 
 	wlink @ $< name $@
 
-drally.le: drally.wlink drally.obj
+qfgiv.le: qfgiv.wlink qfgiv.obj
 	wlink @ $< op nostub name $@ 
 
-drally.obj: drally.asm 
+qfgiv.obj: qfgiv.asm 
 #	wasm -fo=$@ $<
 	nasm -f obj -o $@ $< -O0
 #	ml.exe /omf /c /Fo$@ $<
 
-drally.asm: $(Makefile) $(segs)
+qfgiv.asm: $(Makefile) $(segs)
 	@touch $@
 
 %.inc: bin2inc
@@ -45,4 +45,4 @@ bin2inc: bin2inc.o fixups.o le.o disasm.o disasm_switch.o address_mode.o $(ops)
 .PHONY: clean
 
 clean:
-	@rm -f $(segs) *.o drally.obj drally.exe drally.le bin2inc
+	@rm -f $(segs) *.o qfgiv.obj qfgiv.exe qfgiv.le bin2inc
